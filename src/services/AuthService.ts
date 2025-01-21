@@ -22,6 +22,7 @@ export default class AuthService {
 
     async login(data: LoginUserInput): Promise<AuthTokens> {
         let user; 
+   
         if (data.email) user = await this.userService.getByKey("email", data.email)
 
         if (!user || !(await bcrypt.compare(data.password, user.password))) throw new HttpException(400, "Wrong Credentials");

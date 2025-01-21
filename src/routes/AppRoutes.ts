@@ -10,7 +10,7 @@ const authMiddleware = new Auth();
 router.use(
   "/users",
   authMiddleware.verifyToken,
-  authMiddleware.verifyRoles([Role.MANAGER, Role.ADMIN]),
+//   authMiddleware.verifyRoles([Role.MANAGER, Role.ADMIN]),
   UserRoutes
 );
 router.use("/auth", AuthRoutes);
