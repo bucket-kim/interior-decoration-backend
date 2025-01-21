@@ -2,15 +2,23 @@ import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { connectToDB } from "./config/db";
+import { HttpException } from "./utils/HttpExceptions";
+import ErrorHandler from "./middlewares/ErrorHandler";
+import { AppRoutes } from "./routes/AppRoutes";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 
+app.use("/api", AppRoutes)
+
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(400).send("Rout not found")
+    next(new HttpException(404, "Route not found"))
 })
+
+// @ts-ignore
+app.use(ErrorHandler)
 
 const initializeApp = async() => {
     try {
