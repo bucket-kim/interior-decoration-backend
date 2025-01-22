@@ -1,10 +1,10 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
-import { connectToDB } from "./config/db";
-import { HttpException } from "./utils/HttpExceptions";
-import ErrorHandler from "./middlewares/ErrorHandler";
-import { AppRoutes } from "./routes/AppRoutes";
+import { connectToDB } from "./src/config/db";
+import { HttpException } from "./src/utils/HttpExceptions";
+import ErrorHandler from "./src/middlewares/ErrorHandler";
+import { AppRoutes } from "./src/routes/AppRoutes";
 
 const app = express();
 app.use(express.json());
