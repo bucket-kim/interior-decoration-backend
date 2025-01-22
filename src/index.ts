@@ -23,7 +23,7 @@ app.use(ErrorHandler)
 const initializeApp = async() => {
     try {
         await connectToDB();
-        app.listen(8080, () => {
+        app.listen(process.env.PORT || 8080, () => {
             console.log(`[server]: Server running at http://localhost/8080/api`)
         })
     }catch(error) {
