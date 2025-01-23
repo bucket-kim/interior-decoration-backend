@@ -12,7 +12,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 
 app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "https://interior-decoration-backend.onrender.com")
+    res.header("Access-Control-Allow-Origin", "https://192.168.1.23:5174")
+    res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
     next()
