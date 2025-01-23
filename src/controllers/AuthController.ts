@@ -20,22 +20,22 @@ export default class AuthController {
 
     async login(req: Request, res: Response, next: NextFunction) {
         try {
-          const { accessToken, refreshToken } = await this.authService.login(req.body);
+          const { accessToken, refreshToken, user} = await this.authService.login(req.body);
           res
             .cookie("jwt", refreshToken, COOKIE_OPTIONS)
             .status(200)
-            .send({ accessToken });
+            .send({ accessToken, user });
         } catch (err) {
           next(err);
         }
       }
       async register(req: Request, res: Response, next: NextFunction) {
         try {
-          const { accessToken, refreshToken } = await this.authService.register(req.body);
+          const { accessToken, refreshToken, user } = await this.authService.register(req.body);
           res
             .cookie("jwt", refreshToken, COOKIE_OPTIONS)
             .status(201)
-            .send({ accessToken });
+            .send({ accessToken, user });
         } catch (err) {
           next(err);
         }

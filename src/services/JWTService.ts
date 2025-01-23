@@ -1,12 +1,20 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { HttpException } from '../utils/HttpExceptions';
+import { Role } from '@prisma/client';
 
 dotenv.config();
 
 export type AuthTokens = {
     accessToken: string;
     refreshToken: string;
+    user: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        roles: Role[];
+    }
 }
 
 const { ACCESS_TOKEN_SECRET, ACCESS_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRY } = process.env as { [key: string]: string };
@@ -25,7 +33,13 @@ export class JwtService {
             expiresIn: REFRESH_TOKEN_EXPIRY
         })
 
-        return {accessToken, refreshToken}
+        return {accessToken, refreshToken, user: {
+            id: (payload as any).id,
+            firstName: (payload as any).firstName,
+            lastName: (payload as any).lastName,
+            email: (payload as any).email,
+            roles: (payload as any).roles
+        }}
     }
 
     async verify(token: string, secret: string): Promise<jwt.JwtPayload> {

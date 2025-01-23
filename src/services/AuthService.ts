@@ -27,49 +27,25 @@ export default class AuthService {
 
         if (!user || !(await bcrypt.compare(data.password, user.password))) throw new HttpException(400, "Wrong Credentials");
 
-        const {id, email, roles, firstName, lastName} = user;
+       const {id, email, roles, firstName, lastName} = user;
 
         const {accessToken, refreshToken} = this.jwtService.getAuthToken({email, roles});
 
         await this.userService.update(user.id, {refreshToken})
 
-        const returnData = {
-            accessToken,
-            refreshToken,
-            user: {
-                id,
-                firstName,
-                lastName,
-                email,
-                roles
-            }
-        }
-
-        return returnData
+        return {accessToken, refreshToken, user: {id, email, roles, firstName, lastName}}
     }
 
     async register (data: RegisterUserInput): Promise<AuthTokens> {
         const newUser = await this.userService.create(data)
 
-        const {id, email, roles, firstName, lastName}= newUser;
+        const {id, email, roles, firstName, lastName} = newUser;
 
         const {accessToken, refreshToken} = this.jwtService.getAuthToken({email, roles})
 
         await this.userService.update(newUser.id, {refreshToken})
 
-        const returnData = {
-            accessToken,
-            refreshToken,
-            user: {
-                id,
-                firstName,
-                lastName,
-                email,
-                roles
-            }
-        }
-
-        return returnData
+        return {accessToken, refreshToken, user: {id, email, roles, firstName, lastName}}
     }
 
     async refresh (refreshToken: string): Promise<{accessToken: string}> {
