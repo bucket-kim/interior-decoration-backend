@@ -11,14 +11,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 
-app.use("/api", AppRoutes)
-
 app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "https://interior-decoration-backend.onrender.com/api")
+    res.header("Access-Control-Allow-Origin", "https://interior-decoration-backend.onrender.com")
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
     next()
 })
+app.use("/api", AppRoutes)
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     next(new HttpException(404, "Route not found"))
