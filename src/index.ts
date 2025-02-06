@@ -13,14 +13,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 let env = 'production'
+// : 'https://localhost:5173'
 
-const URLS =
-  env === 'production'
-    ? 'https://interior-decoration.vercel.app'
-    : 'https://localhost:5173'
+const URLS ='https://interior-decoration.vercel.app';
 
 app.use(cors({
-  origin: "https://localhost:5173",
+  origin: URLS,
   credentials: true
 }))
 
